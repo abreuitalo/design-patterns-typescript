@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", // ambiente que vai rodar em prod,
+    "module": "CommonJS", //sistema de modulos
+    "lib": ["ESNext", "DOM"], //bibliotecas
+    "outDir": "./dist", //saida do projeto
+    "rootDir": "./src", //raiz do projeto
+    "removeComments": true, //remover comentarios ao compilar
+    "noEmitOnError": true, //nao emitir erros na compilacao
+    "strict": true, //modo estrito
+    "esModuleInterop": true, //habilita require e import
+    "skipLibCheck": true, //pula checagem de declarations files (.d.ts)
+    "forceConsistentCasingInFileNames": true //nao permitir referencias consistentes em files
+  },
+  "include": ["./src"], //check sempre pasta src
+}
