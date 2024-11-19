@@ -12,5 +12,5 @@
     "skipLibCheck": true, //pula checagem de declarations files (.d.ts)
     "forceConsistentCasingInFileNames": true //nao permitir referencias consistentes em files
   },
-  "include": ["./src"], //check sempre pasta src
+  "include": ["./src"] //check sempre pasta src
 }
