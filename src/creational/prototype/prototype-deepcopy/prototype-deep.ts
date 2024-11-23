@@ -1,4 +1,4 @@
-export interface Prototype {
+interface Prototype {
   clone(): Prototype;
 }
 
@@ -9,13 +9,12 @@ export class Address implements Prototype {
   ) {}
 
   clone(): Address {
-    // Retorna uma nova instância de Address com valores copiados
     return new Address(this.street, this.number);
   }
 }
 
 export class Person implements Prototype {
-  public addresses: Address[] = [];
+  public address: Address[] = [];
 
   constructor(
     public name: string,
@@ -23,28 +22,22 @@ export class Person implements Prototype {
   ) {}
 
   clone(): Person {
-    // Cria uma nova instância de Person com propriedades copiadas
     const newObj = new Person(this.name, this.age);
-    // Cria uma nova lista de endereços clonados para o novo objeto,
-    // garantindo independência entre os objetos.
-    newObj.addresses = this.addresses.map((item) => item.clone());
+    newObj.address = this.address.map((address) => address.clone());
     return newObj;
   }
 
   addAddress(address: Address): void {
-    this.addresses.push(address);
+    this.address.push(address);
   }
 }
 
-const address1 = new Address('Av Brasil', 15);
 const person1 = new Person('Italo', 21);
+const address1 = new Address('Av Brasil', 1);
 person1.addAddress(address1);
+const person2 = person1.clone();
 
-const person2 = person1.clone(); // cria uma nova instacia
+person1.address[0].street = 'Bla bla';
 
-person1.addresses[0].street = 'Bla bla bla'; // muda apenas no person1
-
-person2.name = 'Joana'; // shadowing
-
-console.log(person2);
-console.log(person2.addresses);
+console.log(person1.address);
+console.log(person2.address);

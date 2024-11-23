@@ -4,14 +4,13 @@ const personPrototype = {
   age: 21,
 
   fullName() {
-    return this.firstName + ' ' + this.lastName;
+    return `${this.firstName} ${this.lastName}`;
   },
 };
 
-const anotherPerson = Object.create(personPrototype); // delegacao
+const person1 = Object.create(personPrototype); // Prototype
+person1.firstName = 'José'; // Shadowing
 
-anotherPerson.firstName = 'Joana'; //shadowing (olhe primeiro no objeto copiado)
-
-console.log(anotherPerson);
-console.log(anotherPerson.firstName);
-console.log(anotherPerson.fullName());
+console.log(person1);
+console.log(person1.fullName());
+console.log(Object.getPrototypeOf(person1));

@@ -11,7 +11,7 @@ const personPrototype = {
   age: 21,
 
   fullName() {
-    return this.firstName + ' ' + this.lastName;
+    return `${this.firstName} ${this.lastName}`;
   },
 };
 
@@ -21,15 +21,14 @@ Person.prototype.constructor = Person; //voltar constructor (quase igual uma cla
 // "Herança"
 function SubPerson(firstName, lastName, age) {
   Person.call(this, firstName, lastName, age);
-  this.fromSubClass = 'OIE';
+  this.fromSubPerson = 'FROM SUB PERSON';
 }
 
 SubPerson.prototype = Object.create(Person.prototype);
 SubPerson.constructor = SubPerson;
 
-const person1 = new Person('Joana', 'Miranda', 21);
-console.log(person1.fullName());
+const person1 = new Person('Jade', 'Pico', 20);
+console.log(person1);
 
-const person2 = new SubPerson('Elena', 'Vieira', 20);
+const person2 = new SubPerson('teste1', 'teste2', 22);
 console.log(person2);
-console.log(person2.fullName());

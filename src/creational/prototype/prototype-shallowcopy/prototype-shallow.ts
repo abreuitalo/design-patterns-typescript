@@ -1,4 +1,4 @@
-export interface Prototype {
+interface Prototype {
   clone(): Prototype;
 }
 
@@ -10,36 +10,30 @@ export class Address {
 }
 
 export class Person implements Prototype {
-  public addresses: Address[] = [];
+  public readonly address: Address[] = [];
 
   constructor(
     public name: string,
     public age: number,
   ) {}
 
-  //Criando o Prototype
-  clone(): Person {
+  clone(): this {
     const newObj = Object.create(this);
     return newObj;
   }
 
   addAddress(address: Address): void {
-    this.addresses.push(address);
+    this.address.push(address);
   }
 }
 
-const address1 = new Address('Av Brasil', 15);
 const person1 = new Person('Italo', 21);
+const address1 = new Address('Av Brasil', 1);
 person1.addAddress(address1);
+
+person1.address[0].street = 'Bla bla'; // muda os objetos clonados tambem
 
 const person2 = person1.clone();
 
-// possivel problema
-// altera valor de address em person 2, por se tratar de referencia
-person1.addresses[0].street = 'Bla bla bla';
-
-person2.name = 'Joana';
+person1.name = 'aaaa';
 console.log(person2);
-
-console.log(person2.addresses);
-//[ Address { street: 'Bla bla bla', number: 15 } ]
