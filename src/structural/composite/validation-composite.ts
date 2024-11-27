@@ -1,52 +1,55 @@
 // Component
-export abstract class ValidationComponent {
-  abstract validate(value: unknown): boolean;
+interface ValidationComponent {
+  validate(value: unknown): boolean;
 }
 
 // Leaf
-export class ValidateEmail extends ValidationComponent {
+export class ValidateEmail implements ValidationComponent {
   validate(value: unknown): boolean {
     if (typeof value !== 'string') return false;
     return /@/.test(value);
   }
 }
 
-export class ValidateString extends ValidationComponent {
-  validate(value: unknown): boolean {
-    return typeof value === 'string';
-  }
-}
-
-export class ValidateNumber extends ValidationComponent {
+export class ValidateNumber implements ValidationComponent {
   validate(value: unknown): boolean {
     if (typeof value !== 'string') return false;
     return /\d/.test(value);
   }
 }
 
+export class ValidateString implements ValidationComponent {
+  validate(value: unknown): boolean {
+    return typeof value === 'string';
+  }
+}
+
 // Composite
-export class ValidationComposite extends ValidationComponent {
-  private readonly children: ValidationComponent[] = [];
+export class ValidationComposite implements ValidationComponent {
+  private readonly validations: ValidationComponent[] = [];
 
   validate(value: unknown): boolean {
-    for (const child of this.children) {
-      const validation = child.validate(value);
-      if (!validation) return false;
+    for (const validate of this.validations) {
+      if (!validate.validate(value)) return false;
     }
 
     return true;
   }
 
   add(...validations: ValidationComponent[]): void {
-    validations.forEach((validation) => this.children.push(validation));
+    validations.forEach((validation) => this.validations.push(validation));
   }
 }
 
+// Client
 const validateEmail = new ValidateEmail();
 const validateNumber = new ValidateNumber();
 const validateString = new ValidateString();
 
 const validateComposite = new ValidationComposite();
+const validateComposite2 = new ValidationComposite();
+
+validateComposite.add(validateComposite2); // add composite in another composite
 
 validateComposite.add(validateString, validateEmail, validateNumber);
-console.log(validateComposite.validate('teste123@gmail.com'));
+console.log(validateComposite);
