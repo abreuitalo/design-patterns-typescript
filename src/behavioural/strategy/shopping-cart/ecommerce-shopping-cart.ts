@@ -5,11 +5,11 @@ export class ECommerceShoppingCart {
   private products: ECommerceProductProtocol[] = [];
   private _discountStrategy: DiscountStrategy = new DiscountStrategy();
 
-  addProduct(...products: ECommerceProductProtocol[]): void {
-    products.forEach((product) => this.products.push(product));
+  addProduct(product: ECommerceProductProtocol): void {
+    this.products.push(product);
   }
 
-  getProducts(): ECommerceProductProtocol[] {
+  getProduct(): ECommerceProductProtocol[] {
     return this.products;
   }
 
